@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>改革开放·今非昔比 — 毛概课堂展示</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.7/dist/iconify-icon.min.js"></script>
+	<style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        ::-webkit-scrollbar{width:4px}
+        ::-webkit-scrollbar-track{background:#050505}
+        ::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
+        html,body{width:100%;height:100%;overflow:hidden;background:#050505;color:#fff;font-family:'Inter','Noto Serif SC',sans-serif;-webkit-font-smoothing:antialiased}
+        .serif{font-family:'Noto Serif SC',serif}
+
+        .presentation{width:100%;height:100vh;position:relative;overflow:hidden}
+        .slide{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:50px 70px;opacity:0;visibility:hidden;transition:opacity .8s cubic-bezier(.16,1,.3,1),visibility .8s;z-index:0;overflow-y:auto}
+        .slide.active{opacity:1;visibility:visible;z-index:10}
+
+        .progress-bar{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,#c8a45c,#e8d5a3);z-index:1000;transition:width .6s cubic-bezier(.16,1,.3,1)}
+        .slide-counter{position:fixed;bottom:32px;right:44px;z-index:100;font-size:11px;font-weight:500;letter-spacing:.2em;color:rgba(255,255,255,.35)}
+        .slide-counter .current{color:#c8a45c;font-size:16px;font-weight:600}
+
+        .nav-arrow{position:fixed;top:50%;transform:translateY(-50%);z-index:100;width:44px;height:44px;border:1px solid rgba(255,255,255,.08);border-radius:50%;background:rgba(255,255,255,.02);backdrop-filter:blur(8px);color:rgba(255,255,255,.4);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .3s}
+        .nav-arrow:hover{border-color:rgba(200,164,92,.4);color:#c8a45c;background:rgba(200,164,92,.05)}
+        .nav-arrow--prev{left:24px}
+        .nav-arrow--next{right:24px}
+        .nav-arrow:disabled{opacity:.1;pointer-events:none}
+
+        .grid-bg{position:fixed;inset:0;background-image:linear-gradient(rgba(255,255,255,.015) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.015) 1px,transparent 1px);background-size:80px 80px;pointer-events:none;z-index:1}
+
+        /* Animations */
+        .slide.active .a-up{animation:fadeUp .9s cubic-bezier(.16,1,.3,1) forwards}
+        .slide.active .a-d1{animation-delay:.1s}.slide.active .a-d2{animation-delay:.2s}.slide.active .a-d3{animation-delay:.35s}
+        .slide.active .a-d4{animation-delay:.5s}.slide.active .a-d5{animation-delay:.65s}.slide.active .a-d6{animation-delay:.8s}.slide.active .a-d7{animation-delay:.95s}
+        .a-up,.a-sc,.a-l,.a-r,.a-fi{opacity:0;transform:translateY(40px)}
+        .a-sc{transform:scale(.92)}
+        .a-l{transform:translateX(-60px)}
+        .a-r{transform:translateX(60px)}
+        .a-fi{transform:none}
+        .slide.active .a-sc{animation:scaleIn 1s cubic-bezier(.16,1,.3,1) forwards}
+        .slide.active .a-l{animation:fromL .9s cubic-bezier(.16,1,.3,1) forwards}
+        .slide.active .a-r{animation:fromR .9s cubic-bezier(.16,1,.3,1) forwards}
+        .slide.active .a-fi{animation:fadeIn 1.2s ease forwards}
+        @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+        @keyframes scaleIn{to{opacity:1;transform:scale(1)}}
+        @keyframes fromL{to{opacity:1;transform:translateX(0)}}
+        @keyframes fromR{to{opacity:1;transform:translateX(0)}}
+        @keyframes fadeIn{to{opacity:1}}
+
+        /* Marquee */
+        .marquee-wrap{overflow:hidden;width:100%;white-space:nowrap}
+        .marquee-track{display:inline-flex;animation:marquee 25s linear infinite}
+        .marquee-track span{font-size:clamp(48px,8vw,110px);font-weight:700;letter-spacing:-.04em;color:rgba(255,255,255,.03);padding:0 40px;font-family:'Noto Serif SC',serif}
+        @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+        /* Common */
+        .sec-label{font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:#c8a45c;margin-bottom:20px}
+        .s-title{font-size:clamp(24px,4vw,56px);font-weight:600;line-height:1.15;letter-spacing:-.03em;margin-bottom:20px}
+        .s-sub{font-size:clamp(14px,1.8vw,20px);font-weight:300;color:rgba(255,255,255,.5);line-height:1.7;max-width:680px}
+        .divider{width:56px;height:1px;background:#c8a45c;margin:20px 0}
+        .accent{color:#c8a45c}
+        .tm{color:rgba(255,255,255,.4)}.td{color:rgba(255,255,255,.22)}
+        .deco-line{width:1px;height:70px;background:linear-gradient(to bottom,rgba(200,164,92,.4),transparent);margin:16px auto}
+
+        /* Cover */
+        .cover-bg{position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 42%,rgba(200,164,92,.06),transparent);pointer-events:none}
+        .cover-line{position:absolute;width:1px;height:100px;background:linear-gradient(to bottom,transparent,rgba(200,164,92,.25),transparent)}
+        .cover-year{font-size:clamp(90px,16vw,240px);font-weight:700;letter-spacing:-.06em;color:rgba(255,255,255,.025);position:absolute;bottom:-20px;right:-10px;line-height:1;pointer-events:none}
+
+        /* TOC */
+        .toc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;max-width:860px;width:100%}
+        .toc-item{padding:22px 28px;border:1px solid rgba(255,255,255,.05);display:flex;align-items:center;gap:16px;transition:all .4s;cursor:pointer}
+        .toc-item:hover{border-color:rgba(200,164,92,.3);background:rgba(200,164,92,.03)}
+        .toc-num{font-size:24px;font-weight:600;color:rgba(255,255,255,.08);min-width:36px;font-family:'Inter'}
+        .toc-item:hover .toc-num{color:#c8a45c}
+        .toc-text{font-size:13px;letter-spacing:.02em;color:rgba(255,255,255,.6)}
+        .toc-item:hover .toc-text{color:rgba(255,255,255,.9)}
+
+        /* Timeline */
+        .timeline{position:relative;max-width:780px;width:100%}
+        .timeline::before{content:'';position:absolute;left:16px;top:0;bottom:0;width:1px;background:rgba(255,255,255,.06)}
+        .tl-item{display:flex;gap:28px;margin-bottom:32px}
+        .tl-dot{width:33px;min-width:33px;display:flex;justify-content:center;padding-top:5px;position:relative;z-index:2}
+        .tl-dot::before{content:'';width:7px;height:7px;border-radius:50%;background:#c8a45c;box-shadow:0 0 10px rgba(200,164,92,.35)}
+        .tl-yr{font-size:12px;font-weight:600;color:#c8a45c;letter-spacing:.1em;margin-bottom:4px;font-family:'Inter'}
+        .tl-txt{font-size:14px;color:rgba(255,255,255,.55);line-height:1.7}
+        .tl-txt strong{color:#fff;font-weight:500}
+
+        /* Compare */
+        .cmp-wrap{display:grid;grid-template-columns:1fr 50px 1fr;gap:0;max-width:960px;width:100%;align-items:stretch}
+        .cmp-card{padding:30px 28px;border:1px solid rgba(255,255,255,.05);display:flex;flex-direction:column;justify-content:center}
+        .cmp-b{border-right:none;background:rgba(255,255,255,.01)}
+        .cmp-a{border-left:none;background:rgba(200,164,92,.015);border-color:rgba(200,164,92,.12)}
+        .cmp-vs{display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:rgba(255,255,255,.12);letter-spacing:.15em}
+        .cmp-lbl{font-size:9px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;margin-bottom:16px}
+        .cmp-b .cmp-lbl{color:rgba(255,255,255,.25)}.cmp-a .cmp-lbl{color:#c8a45c}
+        .cmp-val{font-size:clamp(28px,4.5vw,46px);font-weight:600;letter-spacing:-.03em;margin-bottom:10px;font-family:'Inter'}
+        .cmp-b .cmp-val{color:rgba(255,255,255,.45)}.cmp-a .cmp-val{color:#c8a45c}
+        .cmp-desc{font-size:13px;color:rgba(255,255,255,.3);line-height:1.7}
+
+        /* Stat Row */
+        .stat-row{display:grid;gap:1px;max-width:960px;width:100%;background:rgba(255,255,255,.03)}
+        .stat-item{background:#0a0a0a;padding:28px 22px;text-align:center}
+        .stat-num{font-size:clamp(24px,3vw,38px);font-weight:600;color:#c8a45c;letter-spacing:-.02em;margin-bottom:6px;font-family:'Inter'}
+        .stat-lbl{font-size:11px;color:rgba(255,255,255,.3);letter-spacing:.04em;line-height:1.5}
+
+        /* Quote */
+        .quote-mark{font-size:52px;color:rgba(200,164,92,.18);line-height:1;font-family:Georgia,serif}
+        .quote-text{font-size:clamp(16px,2.2vw,24px);font-weight:400;line-height:1.8;color:rgba(255,255,255,.75);margin:12px 0 20px}
+        .quote-author{font-size:12px;color:#c8a45c;letter-spacing:.1em}
+
+        /* Img */
+        .img-p{width:100%;aspect-ratio:16/9;background:#111;border:1px solid rgba(255,255,255,.05);overflow:hidden;position:relative}
+        .img-p img{width:100%;height:100%;object-fit:cover;filter:grayscale(.6) contrast(1.1);opacity:.65;transition:all 1s}
+        .img-p:hover img{filter:grayscale(.3) contrast(1.05);opacity:.85}
+        .img-cap{position:absolute;bottom:0;left:0;right:0;padding:14px 18px;background:linear-gradient(transparent,rgba(0,0,0,.8));font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.04em}
+
+        /* Two Col */
+        .two-col{display:grid;grid-template-columns:1fr 1fr;gap:50px;max-width:960px;width:100%;align-items:center}
+        .two-col--r{direction:rtl}.two-col--r>*{direction:ltr}
+
+        /* Point List */
+        .pt-list{list-style:none;display:flex;flex-direction:column;gap:14px}
+        .pt-list li{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:rgba(255,255,255,.55);line-height:1.7}
+        .pt-list li iconify-icon{color:#c8a45c;font-size:15px;margin-top:3px;flex-shrink:0}
+
+        /* Glow */
+        .glow{position:absolute;border-radius:50%;filter:blur(100px);pointer-events:none}
+        .glow-g{background:rgba(200,164,92,.07);width:450px;height:450px}
+        .glow-w{background:rgba(255,255,255,.025);width:380px;height:380px}
+
+        /* Card Grid */
+        .card-grid{display:grid;gap:2px;max-width:960px;width:100%;background:rgba(255,255,255,.03)}
+        .card-grid.c3{grid-template-columns:repeat(3,1fr)}
+        .card-grid.c4{grid-template-columns:repeat(4,1fr)}
+        .card-grid.c2{grid-template-columns:repeat(2,1fr)}
+        .cg-item{background:#0a0a0a;padding:28px 22px;text-align:center;transition:background .3s}
+        .cg-item:hover{background:#0e0e0e}
+        .cg-icon{font-size:26px;color:#c8a45c;margin-bottom:14px}
+        .cg-title{font-size:13px;font-weight:500;color:rgba(255,255,255,.7);margin-bottom:8px}
+        .cg-desc{font-size:11px;color:rgba(255,255,255,.3);line-height:1.6}
+        .cg-desc strong{color:rgba(255,255,255,.6);font-weight:500}
+
+        /* Full width image slide */
+        .full-img-slide{padding:0;position:relative}
+        .full-img-slide img{width:100%;height:100%;object-fit:cover;filter:grayscale(.5) contrast(1.1) brightness(.5);opacity:.6}
+        .full-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,5,5,.95) 0%,rgba(5,5,5,.4) 50%,rgba(5,5,5,.7) 100%);display:flex;flex-direction:column;justify-content:flex-end;align-items:center;padding:60px 80px}
+
+        /* Number highlight */
+        .big-num{font-size:clamp(60px,10vw,130px);font-weight:700;letter-spacing:-.05em;color:rgba(255,255,255,.03);position:absolute;pointer-events:none;font-family:'Inter'}
+
+        /* Horizontal scroll hint */
+        .scroll-hint{display:flex;gap:12px;margin-top:24px}
+        .scroll-hint span{width:32px;height:2px;background:rgba(255,255,255,.08);transition:background .3s}
+        .scroll-hint span.on{background:#c8a45c}
+
+        /* Footer logo */
+        .f-logo{font-size:11px;letter-spacing:.3em;color:rgba(255,255,255,.12);margin-bottom:32px}
+
+        /* Responsive */
+        @media(max-width:768px){
+            .slide{padding:32px 22px}
+            .toc-grid{grid-template-columns:1fr}
+            .cmp-wrap{grid-template-columns:1fr;gap:0}
+            .cmp-b{border-right:1px solid rgba(255,255,255,.05);border-bottom:none}
+            .cmp-vs{height:36px}
+            .cmp-a{border-left:1px solid rgba(200,164,92,.12);border-top:none}
+            .stat-row,.card-grid.c3,.card-grid.c4{grid-template-columns:repeat(2,1fr)}
+            .card-grid.c2{grid-template-columns:1fr}
+            .two-col{grid-template-columns:1fr;gap:28px}
+            .two-col--r{direction:ltr}
+            .nav-arrow{width:38px;height:38px}
+            .nav-arrow--prev{left:10px}.nav-arrow--next{right:10px}
+            .slide-counter{bottom:16px;right:16px}
+            .full-img-overlay{padding:32px 24px}
+        }
+	</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="progress-bar" id="progressBar"></div>
+<button class="nav-arrow nav-arrow--prev" id="prevBtn" disabled><iconify-icon icon="lucide:chevron-left" width="18"></iconify-icon></button>
+<button class="nav-arrow nav-arrow--next" id="nextBtn"><iconify-icon icon="lucide:chevron-right" width="18"></iconify-icon></button>
+<div class="slide-counter"><span class="current" id="currentNum">01</span><span> / </span><span id="totalNum">28</span></div>
+
+<div class="presentation" id="presentation">
+
+	<!-- ====== 01 COVER ====== -->
+	<div class="slide active" data-i="0">
+		<div class="cover-bg"></div>
+		<div class="cover-line" style="left:14%;top:18%"></div>
+		<div class="cover-line" style="right:18%;top:28%"></div>
+		<div class="cover-line" style="left:50%;top:65%"></div>
+		<div class="cover-year a-fi">1978</div>
+		<div class="sec-label a-up a-d1">毛泽东思想和中国特色社会主义理论体系概论</div>
+		<h1 class="s-title serif a-up a-d2" style="font-size:clamp(32px,5.5vw,76px);text-align:center">改革开放<span class="accent">·</span>今非昔比</h1>
+		<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		<p class="s-sub a-up a-d4" style="text-align:center">从1978到2025，一场改变中国命运的伟大变革</p>
+		<div class="deco-line a-up a-d5"></div>
+		<p class="td a-up a-d6" style="font-size:11px;letter-spacing:.15em;margin-top:6px">按方向键或点击箭头翻页</p>
+	</div>
+
+	<!-- ====== 02 TOC ====== -->
+	<div class="slide" data-i="1">
+		<div class="glow glow-g" style="top:-80px;right:-80px"></div>
+		<div class="sec-label a-up a-d1">CONTENTS</div>
+		<h2 class="s-title serif a-up a-d2">目录</h2>
+		<div class="toc-grid a-up a-d3">
+			<div class="toc-item" onclick="go(2)"><span class="toc-num">01</span><span class="toc-text">历史背景 — 改革前的中国</span></div>
+			<div class="toc-item" onclick="go(3)"><span class="toc-num">02</span><span class="toc-text">历史背景 — "文革"的深刻教训</span></div>
+			<div class="toc-item" onclick="go(4)"><span class="toc-num">03</span><span class="toc-text">思想先导 — 真理标准大讨论</span></div>
+			<div class="toc-item" onclick="go(5)"><span class="toc-num">04</span><span class="toc-text">伟大转折 — 十一届三中全会</span></div>
+			<div class="toc-item" onclick="go(6)"><span class="toc-num">05</span><span class="toc-text">总设计师 — 邓小平与改革开放</span></div>
+			<div class="toc-item" onclick="go(7)"><span class="toc-num">06</span><span class="toc-text">农村改革（一）— 小岗村的惊雷</span></div>
+			<div class="toc-item" onclick="go(8)"><span class="toc-num">07</span><span class="toc-text">农村改革（二）— 联产承包推广</span></div>
+			<div class="toc-item" onclick="go(9)"><span class="toc-num">08</span><span class="toc-text">城市改革（一）— 国企改革历程</span></div>
+			<div class="toc-item" onclick="go(10)"><span class="toc-num">09</span><span class="toc-text">城市改革（二）— 市场经济确立</span></div>
+			<div class="toc-item" onclick="go(11)"><span class="toc-num">10</span><span class="toc-text">深圳特区 — 从渔村到国际都市</span></div>
+			<div class="toc-item" onclick="go(12)"><span class="toc-num">11</span><span class="toc-text">对外开放 — 从点到面</span></div>
+			<div class="toc-item" onclick="go(13)"><span class="toc-num">12</span><span class="toc-text">加入WTO — 融入全球化</span></div>
+			<div class="toc-item" onclick="go(14)"><span class="toc-num">13</span><span class="toc-text">今昔对比 · GDP总量</span></div>
+			<div class="toc-item" onclick="go(15)"><span class="toc-num">14</span><span class="toc-text">今昔对比 · 人民生活</span></div>
+			<div class="toc-item" onclick="go(16)"><span class="toc-num">15</span><span class="toc-text">今昔对比 · 教育事业</span></div>
+			<div class="toc-item" onclick="go(17)"><span class="toc-num">16</span><span class="toc-text">今昔对比 · 医疗卫生</span></div>
+			<div class="toc-item" onclick="go(18)"><span class="toc-num">17</span><span class="toc-text">今昔对比 · 科技创新</span></div>
+			<div class="toc-item" onclick="go(19)"><span class="toc-num">18</span><span class="toc-text">今昔对比 · 基础设施</span></div>
+			<div class="toc-item" onclick="go(20)"><span class="toc-num">19</span><span class="toc-text">今昔对比 — 综合数据总览</span></div>
+			<div class="toc-item" onclick="go(21)"><span class="toc-num">20</span><span class="toc-text">理论创新 — 四大理论成果</span></div>
+			<div class="toc-item" onclick="go(22)"><span class="toc-num">21</span><span class="toc-text">新时代 — 全面深化改革</span></div>
+			<div class="toc-item" onclick="go(23)"><span class="toc-num">22</span><span class="toc-text">新时代 — 脱贫攻坚</span></div>
+			<div class="toc-item" onclick="go(24)"><span class="toc-num">23</span><span class="toc-text">新时代 — 一带一路</span></div>
+			<div class="toc-item" onclick="go(25)"><span class="toc-num">24</span><span class="toc-text">新时代 — 高质量发展</span></div>
+			<div class="toc-item" onclick="go(26)"><span class="toc-num">25</span><span class="toc-text">改革经验与启示</span></div>
+			<div class="toc-item" onclick="go(27)"><span class="toc-num">26</span><span class="toc-text">结语</span></div>
+		</div>
+	</div>
+
+	<!-- ====== 03 历史背景1 ====== -->
+	<div class="slide" data-i="2">
+		<div class="two-col two-col--r">
+			<div>
+				<div class="sec-label a-l a-d1">01 / 历史背景</div>
+				<h2 class="s-title serif a-l a-d2">改革前的中国</h2>
+				<div class="divider a-l a-d3"></div>
+				<p class="s-sub a-l a-d4">1978年前的中国，高度集中的计划经济体制严重束缚了生产力的发展。经过十年"文化大革命"的动乱，国民经济到了崩溃的边缘。</p>
+				<ul class="pt-list a-l a-d5" style="margin-top:20px">
+					<li><iconify-icon icon="lucide:alert-circle"></iconify-icon><span>国民经济增长缓慢，1957-1978年人均国民收入年增仅0.6%</span></li>
+					<li><iconify-icon icon="lucide:alert-circle"></iconify-icon><span>国民经济比例严重失调，重工业过重、轻工业过轻、农业落后</span></li>
+					<li><iconify-icon icon="lucide:alert-circle"></iconify-icon><span>人民生活水平低下，全国仍有2.5亿人口未解决温饱</span></li>
+					<li><iconify-icon icon="lucide:alert-circle"></iconify-icon><span>科技水平落后世界先进水平约20—30年</span></li>
+				</ul>
+			</div>
+			<div class="a-r a-d3">
+				<div class="img-p"><img src="https://picsum.photos/seed/china1978old/800/450.jpg" alt=""><div class="img-cap">1970年代的中国 · 资料图</div></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ====== 04 历史背景2 "文革"教训 ====== -->
+	<div class="slide" data-i="3">
+		<div class="glow glow-w" style="bottom:-100px;left:-100px"></div>
+		<div style="text-align:center;max-width:780px">
+			<div class="sec-label a-up a-d1">02 / 历史背景</div>
+			<h2 class="s-title serif a-up a-d2">"文革"的深刻教训</h2>
+			<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		</div>
+		<div class="card-grid c2 a-up a-d4" style="margin-top:12px">
+			<div class="cg-item" style="text-align:left;padding:32px">
+				<div style="font-size:11px;font-weight:600;color:#c8a45c;letter-spacing:.15em;margin-bottom:14px">政治层面</div>
+				<div style="font-size:14px;color:rgba(255,255,255,.55);line-height:1.8">民主法制遭到严重破坏，国家政治生活极不正常。"以阶级斗争为纲"的方针使国家陷入持续动乱，党的组织和国家政权受到严重削弱。</div>
+			</div>
+			<div class="cg-item" style="text-align:left;padding:32px">
+				<div style="font-size:11px;font-weight:600;color:#c8a45c;letter-spacing:.15em;margin-bottom:14px">经济层面</div>
+				<div style="font-size:14px;color:rgba(255,255,255,.55);line-height:1.8">国民经济损失约5000亿元，"文革"十年间经济几乎停滞。企业管理制度被打乱，生产效率极其低下，国民经济濒临崩溃。</div>
+			</div>
+			<div class="cg-item" style="text-align:left;padding:32px">
+				<div style="font-size:11px;font-weight:600;color:#c8a45c;letter-spacing:.15em;margin-bottom:14px">文化层面</div>
+				<div style="font-size:14px;color:rgba(255,255,255,.55);line-height:1.8">教育文化事业遭到浩劫，高考中断十年，知识分子遭受迫害，中华优秀传统文化被批判，文化断层严重。</div>
+			</div>
+			<div class="cg-item" style="text-align:left;padding:32px">
+				<div style="font-size:11px;font-weight:600;color:#c8a45c;letter-spacing:.15em;margin-bottom:14px">社会层面</div>
+				<div style="font-size:14px;color:rgba(255,255,255,.55);line-height:1.8">社会秩序混乱，人与人之间的信任被严重破坏。大量干部和群众受到迫害，社会矛盾加剧，人民生活苦不堪言。</div>
+			</div>
+		</div>
+		<p class="tm a-up a-d5" style="text-align:center;margin-top:24px;font-size:13px">"文化大革命"不是也不可能是任何意义上的革命或社会进步，而只能造成严重的混乱、破坏和倒退。</p>
+	</div>
+
+	<!-- ====== 05 真理标准大讨论 ====== -->
+	<div class="slide" data-i="4">
+		<div class="two-col">
+			<div class="a-l a-d2">
+				<div class="img-p"><img src="https://picsum.photos/seed/truthdiscuss/800/450.jpg" alt=""><div class="img-cap">1978年 · 真理标准问题大讨论</div></div>
+			</div>
+			<div>
+				<div class="sec-label a-r a-d1">03 / 思想先导</div>
+				<h2 class="s-title serif a-r a-d2">真理标准大讨论</h2>
+				<div class="divider a-r a-d3"></div>
+				<p class="s-sub a-r a-d4">1978年5月10日，《光明日报》发表《实践是检验真理的唯一标准》，引发全国范围内关于真理标准问题的大讨论。</p>
+				<ul class="pt-list a-r a-d5" style="margin-top:20px">
+					<li><iconify-icon icon="lucide:zap"></iconify-icon><span>打破了"两个凡是"的思想禁锢</span></li>
+					<li><iconify-icon icon="lucide:zap"></iconify-icon><span>重新确立了"实事求是"的马克思主义思想路线</span></li>
+					<li><iconify-icon icon="lucide:zap"></iconify-icon><span>为十一届三中全会的召开作了重要的思想和舆论准备</span></li>
+					<li><iconify-icon icon="lucide:zap"></iconify-icon><span>标志着中国思想解放运动的伟大开端</span></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+
+	<!-- ====== 06 十一届三中全会 ====== -->
+	<div class="slide" data-i="5">
+		<div class="glow glow-g" style="bottom:-120px;left:-120px"></div>
+		<div style="text-align:center;max-width:780px">
+			<div class="sec-label a-up a-d1">04 / 伟大转折</div>
+			<h2 class="s-title serif a-up a-d2">十一届三中全会</h2>
+			<div class="divider a-up a-d3" style="margin:20px auto"></div>
+			<p class="s-sub a-up a-d4" style="text-align:center;margin:0 auto 32px">1978年12月18日至22日，中共十一届三中全会在北京召开。这次会议是中国共产党历史上和新中国历史上具有深远意义的伟大转折。</p>
+		</div>
+		<div class="timeline a-up a-d5">
+			<div class="tl-item"><div class="tl-dot"></div><div><div class="tl-yr">核心决策一</div><div class="tl-txt"><strong>否定"以阶级斗争为纲"</strong> — 果断停止使用"以阶级斗争为纲"的口号，终结了持续二十多年的"左"倾错误</div></div></div>
+			<div class="tl-item"><div class="tl-dot"></div><div><div class="tl-yr">核心决策二</div><div class="tl-txt"><strong>工作重心转移</strong> — 作出把党和国家工作中心转移到经济建设上来的历史性决策</div></div></div>
+			<div class="tl-item"><div class="tl-dot"></div><div><div class="tl-yr">核心决策三</div><div class="tl-txt"><strong>实行改革开放</strong> — 作出实行改革开放的历史性决策，开启了改革开放和社会主义现代化建设新时期</div></div></div>
+			<div class="tl-item"><div class="tl-dot"></div><div><div class="tl-yr">深远意义</div><div class="tl-txt">形成了以邓小平为核心的党的第二代中央领导集体，开创了中国特色社会主义道路</div></div></div>
+		</div>
+	</div>
+
+	<!-- ====== 07 邓小平 ====== -->
+	<div class="slide" data-i="6">
+		<div class="glow glow-w" style="top:-80px;right:20%"></div>
+		<div class="two-col two-col--r">
+			<div>
+				<div class="sec-label a-l a-d1">05 / 总设计师</div>
+				<h2 class="s-title serif a-l a-d2">邓小平与改革开放</h2>
+				<div class="divider a-l a-d3"></div>
+				<div class="quote-block a-l a-d4" style="text-align:left;max-width:100%">
+					<div class="quote-mark">"</div>
+					<div class="quote-text serif" style="font-size:clamp(15px,2vw,20px)">不管黑猫白猫，捉到老鼠就是好猫。</div>
+					<div class="quote-author">—— 邓小平</div>
+				</div>
+				<ul class="pt-list a-l a-d5" style="margin-top:20px">
+					<li><iconify-icon icon="lucide:star"></iconify-icon><span>中国社会主义改革开放和现代化建设的<strong style="color:#fff">总设计师</strong></span></li>
+					<li><iconify-icon icon="lucide:star"></iconify-icon><span>提出"建设有中国特色的社会主义"重大命题</span></li>
+					<li><iconify-icon icon="lucide:star"></iconify-icon><span>1992年南巡讲话，推动改革开放进入新阶段</span></li>
+					<li><iconify-icon icon="lucide:star"></iconify-icon><span>提出"三步走"发展战略，规划中国现代化蓝图</span></li>
+				</ul>
+			</div>
+			<div class="a-r a-d3">
+				<div class="img-p" style="aspect-ratio:3/4"><img src="https://picsum.photos/seed/dengxp1992/600/800.jpg" alt=""><div class="img-cap">1992年南巡讲话 · 资料图</div></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ====== 08 小岗村 ====== -->
+	<div class="slide" data-i="7">
+		<div class="two-col">
+			<div class="a-l a-d2">
+				<div class="img-p"><img src="https://picsum.photos/seed/xiaogangvillage/800/450.jpg" alt=""><div class="img-cap">安徽凤阳小岗村 · 中国农村改革的发源地</div></div>
+			</div>
+			<div>
+				<div class="sec-label a-r a-d1">06 / 农村改革（一）</div>
+				<h2 class="s-title serif a-r a-d2">小岗村的惊雷</h2>
+				<div class="divider a-r a-d3"></div>
+				<p class="s-sub a-r a-d4">1978年冬，安徽凤阳小岗村18位农民在一份秘密契约上按下红手印，冒着坐牢的风险实行"大包干"，拉开了中国农村改革的序幕。</p>
+				<div style="margin-top:20px;padding:20px;border:1px solid rgba(200,164,92,.12);background:rgba(200,164,92,.02)" class="a-r a-d5">
+					<div style="font-size:11px;color:#c8a45c;letter-spacing:.15em;margin-bottom:10px;font-weight:600">"大包干"契约内容</div>
+					<div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.8;font-style:italic">"我们分田到户，每户户主签字盖章，如以后能干，每户保证完成每户的全年上交和公粮，不再向国家伸手要钱要粮。如不成，我们干部坐牢杀头也甘心，大家社员也保证把我们的小孩养活到18岁。"</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ====== 09 联产承包推广 ====== -->
+	<div class="slide" data-i="8">
+		<div class="sec-label a-up a-d1" style="text-align:center">07 / 农村改革（二）</div>
+		<h2 class="s-title serif a-up a-d2" style="text-align:center">联产承包责任制的推广</h2>
+		<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		<div class="stat-row a-up a-d4" style="grid-template-columns:repeat(4,1fr)">
+			<div class="stat-item"><div class="stat-num">1978</div><div class="stat-lbl">小岗村率先<br>试行"大包干"</div></div>
+			<div class="stat-item"><div class="stat-num">1982</div><div class="stat-lbl">中央一号文件<br>肯定包产到户</div></div>
+			<div class="stat-item"><div class="stat-num">1983</div><div class="stat-lbl">全国93%<br>农户实行联产承包</div></div>
+			<div class="stat-item"><div class="stat-num">1984</div><div class="stat-lbl">人民公社<br>制度正式废除</div></div>
+		</div>
+		<div class="card-grid c2 a-up a-d5" style="margin-top:2px">
+			<div class="cg-item" style="text-align:left;padding:28px 32px">
+				<div style="font-size:13px;font-weight:500;color:#c8a45c;margin-bottom:10px">icon 产量飞跃</div>
+				<div style="font-size:14px;color:rgba(255,255,255,.55);line-height:1.8">全国粮食产量从1978年的3.05亿吨增长到1984年的4.07亿吨，六年间增长33%，创造了世界农业史上的奇迹。</div>
+			</div>
+			<div class="cg-item" style="text-align:left;padding:28px 32px">
+				<div style="font-size:13px;font-weight:500;color:#c8a45c;margin-bottom:10px">icon 乡镇企业崛起</div>
+				<div style="font-size:14px;color:rgba(255,255,255,.55);line-height:1.8">乡镇企业"异军突起"，到1990年从业人员达9200万，产值占全国社会总产值25%，开辟了中国农村工业化的新路。</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ====== 10 国企改革 ====== -->
+	<div class="slide" data-i="9">
+		<div class="glow glow-g" style="top:-100px;left:-100px"></div>
+		<div style="text-align:center;max-width:780px">
+			<div class="sec-label a-up a-d1">08 / 城市改革（一）</div>
+			<h2 class="s-title serif a-up a-d2">国企改革历程</h2>
+			<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		</div>
+		<div class="timeline a-up a-d4">
+			<div class="tl-item"><div class="tl-dot"></div><div><div class="tl-yr">第一阶段 1978-1984</div><div class="tl-txt"><strong>放权让利</strong> — 扩大企业自主权，实行利润留成制度，打破企业"大锅饭"</div></div></div>
+			<div class="tl-item"><div class="tl-dot"></div><div><div class="tl-yr">第二阶段 1984-1992</div><div class="tl-txt"><strong>利改税与承包经营</strong> — 实行"利改税"，推行承包经营责任制，所有权与经营权分离</div></div></div>
+			<div class="tl-item"><div class="tl-dot"></div><div><div class="tl-yr">第三阶段 1992-2002</div><div class="tl-txt"><strong>建立现代企业制度</strong> — 十四届三中全会提出建立"产权清晰、权责明确、政企分开、管理科学"的现代企业制度</div></div></div>
+			<div class="tl-item"><div class="tl-dot"></div><div><div class="tl-yr">第四阶段 2002至今</div><div class="tl-txt"><strong>股份制改革与混改</strong> — 国有企业股份制改革深入推进，发展混合所有制经济，完善国资监管体制</div></div></div>
+		</div>
+	</div>
+
+	<!-- ====== 11 市场经济确立 ====== -->
+	<div class="slide" data-i="10">
+		<div class="sec-label a-up a-d1" style="text-align:center">09 / 城市改革（二）</div>
+		<h2 class="s-title serif a-up a-d2" style="text-align:center">社会主义市场经济体制的确立</h2>
+		<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		<div class="cmp-wrap a-up a-d4">
+			<div class="cmp-card cmp-b">
+				<div class="cmp-lbl">计划经济时代</div>
+				<div style="font-size:14px;color:rgba(255,255,255,.4);line-height:1.8">
+					· 生产由国家计划统一安排<br>
+					· 物资实行统购统销、计划调拨<br>
+					· 价格由政府统一制定<br>
+					· 企业没有经营自主权<br>
+					· "大锅饭""铁饭碗"现象普遍
+				</div>
+			</div>
+			<div class="cmp-vs">VS</div>
+			<div class="cmp-card cmp-a">
+				<div class="cmp-lbl">社会主义市场经济</div>
+				<div style="font-size:14px;color:rgba(255,255,255,.55);line-height:1.8">
+					· 市场在资源配置中起决定性作用<br>
+					· 多种所有制经济共同发展<br>
+					· 价格由市场供求关系决定<br>
+					· 企业成为独立的市场主体<br>
+					· 宏观调控与市场机制有机结合
+				</div>
+			</div>
+		</div>
+		<p class="tm a-up a-d5" style="text-align:center;margin-top:24px;font-size:13px">1992年党的十四大明确提出建立社会主义市场经济体制的改革目标，这是中国共产党的一次伟大创举。</p>
+	</div>
+
+	<!-- ====== 12 深圳特区 ====== -->
+	<div class="slide full-img-slide" data-i="11">
+		<img src="https://picsum.photos/seed/shenzhenmodern2/1400/800.jpg" alt="">
+		<div class="full-img-overlay">
+			<div class="big-num a-fi" style="top:10%;right:5%;color:rgba(255,255,255,.04)">1980→2025</div>
+			<div class="sec-label a-up a-d1" style="text-align:center">10 / 深圳特区</div>
+			<h2 class="s-title serif a-up a-d2" style="text-align:center;font-size:clamp(28px,4.5vw,60px)">从渔村到国际都市</h2>
+			<div class="divider a-up a-d3" style="margin:20px auto"></div>
+			<div class="stat-row a-up a-d4" style="grid-template-columns:repeat(4,1fr)">
+				<div class="stat-item" style="background:rgba(5,5,5,.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.06)"><div class="stat-num">3万</div><div class="stat-lbl">1980年人口<br>边陲小镇</div></div>
+				<div class="stat-item" style="background:rgba(5,5,5,.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.06)"><div class="stat-num">1768万</div><div class="stat-lbl">2024年常住人口<br>超大城市</div></div>
+				<div class="stat-item" style="background:rgba(5,5,5,.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.06)"><div class="stat-num">3.46万亿</div><div class="stat-lbl">2024年GDP<br>全国第三</div></div>
+				<div class="stat-item" style="background:rgba(5,5,5,.7);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.06)"><div class="stat-num">10000+倍</div><div class="stat-lbl">GDP增长倍数<br>世界奇迹</div></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ====== 13 对外开放格局 ====== -->
+	<div class="slide" data-i="12">
+		<div class="glow glow-w" style="bottom:-80px;right:-80px"></div>
+		<div style="text-align:center;max-width:780px">
+			<div class="sec-label a-up a-d1">11 / 对外开放</div>
+			<h2 class="s-title serif a-up a-d2">从点到面的开放格局</h2>
+			<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		</div>
+		<div class="timeline a-up a-d4">
+			<div class="tl-item"><div class="tl-dot"></div><div><div class="tl-yr">1980年</div><div class="tl-txt"><strong>经济特区</strong> — 设立深圳、珠海、汕头、厦门四个经济特区，成为对外开放的"窗口"和"试验田"</div></div></div>
+			<div class="tl-item"><div class="tl-dot"></div><div><div class="tl-yr">1984年</div><div class="tl-txt"><strong>沿海开放城市</strong> — 开放大连、天津、上海、广州等14个沿海港口城市</div></div></div>
+			<div class="tl-item"><div class="tl-dot"></div><div><div class="tl-yr">1985-1988年</div><div class="tl-txt"><strong>经济开放区</strong> — 开辟长江三角洲、珠江三角洲、闽南三角洲等经济开放区</div></div></div>
+			<div class="tl-item"><div class="tl-dot"></div><div><div class="tl-yr">1990年</div><div class="tl-txt"><strong>浦东开发</strong> — 上海浦东新区开发开放，成为中国改革开放的新地标</div></div></div>
+			<div class="tl-item"><div class="tl-dot"></div><div><div class="tl-yr">1992年以后</div><div class="tl-txt"><strong>全方位开放</strong> — 开放沿江、沿边城市，形成多层次、宽领域、全方位的对外开放格局</div></div></div>
+		</div>
+	</div>
+
+	<!-- ====== 14 加入WTO ====== -->
+	<div class="slide" data-i="13">
+		<div class="two-col two-col--r">
+			<div>
+				<div class="sec-label a-l a-d1">12 / 加入WTO</div>
+				<h2 class="s-title serif a-l a-d2">融入经济全球化</h2>
+				<div class="divider a-l a-d3"></div>
+				<p class="s-sub a-l a-d4">2001年12月11日，中国正式加入世界贸易组织（WTO），标志着中国对外开放进入全新阶段。</p>
+				<ul class="pt-list a-l a-d5" style="margin-top:20px">
+					<li><iconify-icon icon="lucide:trending-up"></iconify-icon><span>货物贸易总额从2001年的5098亿美元增至2024年的<strong style="color:#fff">6.2万亿美元</strong></span></li>
+					<li><iconify-icon icon="lucide:trending-up"></iconify-icon><span>实际利用外资累计超过<strong style="color:#fff">3.5万亿美元</strong>，连续多年居发展中国家首位</span></li>
+					<li><iconify-icon icon="lucide:trending-up"></iconify-icon><span>"中国制造"走向全球，成为<strong style="color:#fff">世界工厂</strong></span></li>
+					<li><iconify-icon icon="lucide:trending-up"></iconify-icon><span>中国在全球产业链、供应链中占据<strong style="color:#fff">核心地位</strong></span></li>
+				</ul>
+			</div>
+			<div class="a-r a-d3">
+				<div class="img-p"><img src="https://picsum.photos/seed/wtochina2001/800/450.jpg" alt=""><div class="img-cap">2001年中国加入WTO签署仪式</div></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ====== 15 对比GDP ====== -->
+	<div class="slide" data-i="14">
+		<div class="sec-label a-up a-d1" style="text-align:center">13 / 今昔对比 · 经济</div>
+		<h2 class="s-title serif a-up a-d2" style="text-align:center">GDP总量的跨越</h2>
+		<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		<div class="cmp-wrap a-up a-d4">
+			<div class="cmp-card cmp-b">
+				<div class="cmp-lbl">1978年</div>
+				<div class="cmp-val">3679亿</div>
+				<div class="cmp-desc">国内生产总值（人民币）<br>仅相当于美国的约5%<br>居世界第11位</div>
+			</div>
+			<div class="cmp-vs">VS</div>
+			<div class="cmp-card cmp-a">
+				<div class="cmp-lbl">2024年</div>
+				<div class="cmp-val">126万亿+</div>
+				<div class="cmp-desc">国内生产总值（人民币）<br>稳居世界第二<br>占全球比重约17%</div>
+			</div>
+		</div>
+		<div class="stat-row a-up a-d5" style="margin-top:2px;grid-template-columns:repeat(5,1fr)">
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(18px,2.2vw,28px)">200+倍</div><div class="stat-lbl">GDP总量增长</div></div>
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(18px,2.2vw,28px)">第2位</div><div class="stat-lbl">全球经济排名</div></div>
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(18px,2.2vw,28px)">第1位</div><div class="stat-lbl">货物贸易总额</div></div>
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(18px,2.2vw,28px)">第1位</div><div class="stat-lbl">外汇储备规模</div></div>
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(18px,2.2vw,28px)">第2位</div><div class="stat-lbl">服务贸易总额</div></div>
+		</div>
+	</div>
+
+	<!-- ====== 16 对比人民生活 ====== -->
+	<div class="slide" data-i="15">
+		<div class="sec-label a-up a-d1" style="text-align:center">14 / 今昔对比 · 民生</div>
+		<h2 class="s-title serif a-up a-d2" style="text-align:center">人民生活的巨变</h2>
+		<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		<div class="cmp-wrap a-up a-d4">
+			<div class="cmp-card cmp-b">
+				<div class="cmp-lbl">1978年</div>
+				<div class="cmp-val">171元</div>
+				<div class="cmp-desc">城镇居民人均可支配收入<br>农村仅134元<br>2.5亿人未解决温饱</div>
+			</div>
+			<div class="cmp-vs">VS</div>
+			<div class="cmp-card cmp-a">
+				<div class="cmp-lbl">2024年</div>
+				<div class="cmp-val">5.2万元</div>
+				<div class="cmp-desc">城镇居民人均可支配收入<br>农村2.1万元<br>历史性消除绝对贫困</div>
+			</div>
+		</div>
+		<div class="stat-row a-up a-d5" style="margin-top:2px;grid-template-columns:repeat(4,1fr)">
+			<div class="stat-item"><div class="stat-num">300+倍</div><div class="stat-lbl">居民收入增长<br><span class="td" style="font-size:9px">1978→2024</span></div></div>
+			<div class="stat-item"><div class="stat-num">78.2岁</div><div class="stat-lbl">人均预期寿命<br><span class="td" style="font-size:9px">1978年仅68岁</span></div></div>
+			<div class="stat-item"><div class="stat-num">66.2%</div><div class="stat-lbl">城镇化率<br><span class="td" style="font-size:9px">1978年仅17.9%</span></div></div>
+			<div class="stat-item"><div class="stat-num">4.9亿+</div><div class="stat-lbl">中等收入群体<br><span class="td" style="font-size:9px">全球最大规模</span></div></div>
+		</div>
+	</div>
+
+	<!-- ====== 17 对比教育 ====== -->
+	<div class="slide" data-i="16">
+		<div class="glow glow-g" style="top:-80px;right:-80px"></div>
+		<div class="sec-label a-up a-d1" style="text-align:center">15 / 今昔对比 · 教育</div>
+		<h2 class="s-title serif a-up a-d2" style="text-align:center">教育事业的腾飞</h2>
+		<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		<div class="card-grid c3 a-up a-d4">
+			<div class="cg-item">
+				<iconify-icon icon="lucide:graduation-cap" class="cg-icon"></iconify-icon>
+				<div class="cg-title">高考恢复</div>
+				<div class="cg-desc">1977年恢复高考<br>570万人报考<br>27万人被录取<br>改变了一代人的命运</div>
+			</div>
+			<div class="cg-item">
+				<iconify-icon icon="lucide:users" class="cg-icon"></iconify-icon>
+				<div class="cg-title">高等教育普及</div>
+				<div class="cg-desc">1978年毛入学率<strong>1.55%</strong><br>2024年达<strong>60.2%</strong><br>在校大学生超<strong>4700万</strong></div>
+			</div>
+			<div class="cg-item">
+				<iconify-icon icon="lucide:book-open" class="cg-icon"></iconify-icon>
+				<div class="cg-title">义务教育</div>
+				<div class="cg-desc">2000年基本普及<br>九年义务教育<br>小学学龄儿童<br>净入学率达<strong>99.95%</strong></div>
+			</div>
+			<div class="cg-item">
+				<iconify-icon icon="lucide:award" class="cg-icon"></iconify-icon>
+				<div class="cg-title">研究生教育</div>
+				<div class="cg-desc">1978年招收研究生<br>仅<strong>10708人</strong><br>2024年在读研究生<br>超过<strong>388万</strong></div>
+			</div>
+			<div class="cg-item">
+				<iconify-icon icon="lucide:building" class="cg-icon"></iconify-icon>
+				<div class="cg-title">高校数量</div>
+				<div class="cg-desc">1978年普通高校<br>仅<strong>598所</strong><br>2024年达<strong>3072所</strong><br>增长5倍以上</div>
+			</div>
+			<div class="cg-item">
+				<iconify-icon icon="lucide:globe" class="cg-icon"></iconify-icon>
+				<div class="cg-title">留学交流</div>
+				<div class="cg-desc">中国已成为世界<br>最大留学生生源国<br>年出国留学超<strong>70万</strong><br>学成归国率超<strong>80%</strong></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ====== 18 对比医疗 ====== -->
+	<div class="slide" data-i="17">
+		<div class="sec-label a-up a-d1" style="text-align:center">16 / 今昔对比 · 医疗</div>
+		<h2 class="s-title serif a-up a-d2" style="text-align:center">医疗卫生事业的跨越</h2>
+		<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		<div class="cmp-wrap a-up a-d4">
+			<div class="cmp-card cmp-b">
+				<div class="cmp-lbl">1978年</div>
+				<div style="font-size:14px;color:rgba(255,255,255,.4);line-height:2">
+					· 每千人口卫技人员 <strong style="color:rgba(255,255,255,.6)">2.56人</strong><br>
+					· 每千人口床位数 <strong style="color:rgba(255,255,255,.6)">1.94张</strong><br>
+					· 基本靠"赤脚医生"<br>
+					· 医疗保障覆盖面极低
+				</div>
+			</div>
+			<div class="cmp-vs">VS</div>
+			<div class="cmp-card cmp-a">
+				<div class="cmp-lbl">2024年</div>
+				<div style="font-size:14px;color:rgba(255,255,255,.55);line-height:2">
+					· 每千人口卫技人员 <strong style="color:#c8a45c">12.6人</strong><br>
+					· 每千人口床位数 <strong style="color:#c8a45c">7.4张</strong><br>
+					· 建成世界最大医疗保障网<br>
+					· 基本医保覆盖超 <strong style="color:#c8a45c">13.3亿人</strong>
+				</div>
+			</div>
+		</div>
+		<div class="stat-row a-up a-d5" style="margin-top:2px;grid-template-columns:repeat(3,1fr)">
+			<div class="stat-item"><div class="stat-num">95%+</div><div class="stat-lbl">基本医疗保险<br>覆盖率</div></div>
+			<div class="stat-item"><div class="stat-num">107万+</div><div class="stat-lbl">医疗卫生机构<br>总数</div></div>
+			<div class="stat-item"><div class="stat-num">1240万+</div><div class="stat-lbl">卫生技术人员<br>总数</div></div>
+		</div>
+	</div>
+
+	<!-- ====== 19 对比科技 ====== -->
+	<div class="slide" data-i="18">
+		<div class="glow glow-w" style="bottom:-100px;left:20%"></div>
+		<div class="sec-label a-up a-d1" style="text-align:center">17 / 今昔对比 · 科技</div>
+		<h2 class="s-title serif a-up a-d2" style="text-align:center">科技自立自强</h2>
+		<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		<div class="card-grid c3 a-up a-d4">
+			<div class="cg-item">
+				<iconify-icon icon="lucide:rocket" class="cg-icon"></iconify-icon>
+				<div class="cg-title">航天领域</div>
+				<div class="cg-desc">从一无所有到<strong>空间站常态化运营</strong><br>嫦娥探月、天问探火<br>北斗导航全球组网</div>
+			</div>
+			<div class="cg-item">
+				<iconify-icon icon="lucide:cpu" class="cg-icon"></iconify-icon>
+				<div class="cg-title">信息技术</div>
+				<div class="cg-desc">从落后追赶到<strong>5G全球领先</strong><br>人工智能、量子计算<br>跻身世界前列</div>
+			</div>
+			<div class="cg-item">
+				<iconify-icon icon="lucide:microscope" class="cg-icon"></iconify-icon>
+				<div class="cg-title">基础研究</div>
+				<div class="cg-desc">研发投入从<strong>不足1%GDP</strong><br>增至<strong>2.64%GDP</strong><br>全球创新指数第<strong>12位</strong></div>
+			</div>
+			<div class="cg-item">
+				<iconify-icon icon="lucide:dna" class="cg-icon"></iconify-icon>
+				<div class="cg-title">生命科学</div>
+				<div class="cg-desc">参与人类基因组计划<br>基因编辑、干细胞研究<br>取得重大突破</div>
+			</div>
+			<div class="cg-item">
+				<iconify-icon icon="lucide:atom" class="cg-icon"></iconify-icon>
+				<div class="cg-title">新能源</div>
+				<div class="cg-desc">光伏、风电装机量<br><strong>世界第一</strong><br>新能源汽车产销量<br><strong>全球第一</strong></div>
+			</div>
+			<div class="cg-item">
+				<iconify-icon icon="lucide:ship" class="cg-icon"></iconify-icon>
+				<div class="cg-title">深海深地</div>
+				<div class="cg-desc">载人深潜突破<strong>万米</strong><br>"奋斗者"号创造纪录<br>深海、深空探测并进</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ====== 20 对比基础设施 ====== -->
+	<div class="slide" data-i="19">
+		<div class="sec-label a-up a-d1" style="text-align:center">18 / 今昔对比 · 基础设施</div>
+		<h2 class="s-title serif a-up a-d2" style="text-align:center">基础设施的巨变</h2>
+		<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		<div class="stat-row a-up a-d4" style="grid-template-columns:repeat(3,1fr)">
+			<div class="stat-item">
+				<iconify-icon icon="lucide:train-front" style="font-size:24px;color:#c8a45c;margin-bottom:10px"></iconify-icon>
+				<div class="stat-num">4.6万km</div>
+				<div class="stat-lbl">高铁运营里程<br><span class="td" style="font-size:9px">1978年铁路总里程仅5.17万km，无高铁</span></div>
+			</div>
+			<div class="stat-item">
+				<iconify-icon icon="lucide:road" style="font-size:24px;color:#c8a45c;margin-bottom:10px"></iconify-icon>
+				<div class="stat-num">544万km</div>
+				<div class="stat-lbl">公路总里程<br><span class="td" style="font-size:9px">1978年仅89万km，高速公路为零</span></div>
+			</div>
+			<div class="stat-item">
+				<iconify-icon icon="lucide:plane" style="font-size:24px;color:#c8a45c;margin-bottom:10px"></iconify-icon>
+				<div class="stat-num">263个</div>
+				<div class="stat-lbl">民用运输机场<br><span class="td" style="font-size:9px">1978年仅有78个</span></div>
+			</div>
+		</div>
+		<div class="stat-row a-up a-d5" style="margin-top:2px;grid-template-columns:repeat(3,1fr)">
+			<div class="stat-item">
+				<iconify-icon icon="lucide:bridge" style="font-size:24px;color:#c8a45c;margin-bottom:10px"></iconify-icon>
+				<div class="stat-num">18.4万km</div>
+				<div class="stat-lbl">高速公路里程<br><span class="td" style="font-size:9px">世界第一，占全球约40%</span></div>
+			</div>
+			<div class="stat-item">
+				<iconify-icon icon="lucide:ship" style="font-size:24px;color:#c8a45c;margin-bottom:10px"></iconify-icon>
+				<div class="stat-num">世界第1</div>
+				<div class="stat-lbl">港口吞吐量<br><span class="td" style="font-size:9px">全球十大港口中国占7席</span></div>
+			</div>
+			<div class="stat-item">
+				<iconify-icon icon="lucide:wifi" style="font-size:24px;color:#c8a45c;margin-bottom:10px"></iconify-icon>
+				<div class="stat-num">10.9亿</div>
+				<div class="stat-lbl">网民规模<br><span class="td" style="font-size:9px">互联网普及率77.5%</span></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ====== 21 综合数据总览 ====== -->
+	<div class="slide" data-i="20">
+		<div class="marquee-wrap a-fi" style="position:absolute;top:12%;left:0;z-index:0">
+			<div class="marquee-track">
+				<span>今非昔比</span><span>·</span><span>今非昔比</span><span>·</span><span>今非昔比</span><span>·</span><span>今非昔比</span><span>·</span><span>今非昔比</span><span>·</span>
+			</div>
+		</div>
+		<div style="position:relative;z-index:2;text-align:center;max-width:900px;width:100%">
+			<div class="sec-label a-up a-d1">19 / 综合数据总览</div>
+			<h2 class="s-title serif a-up a-d2">改革开放46年成就一览</h2>
+			<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		</div>
+		<div style="position:relative;z-index:2;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;max-width:960px;width:100%;background:rgba(255,255,255,.03)" class="a-up a-d4">
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(20px,2.5vw,32px)">3679亿→<br>126万亿</div><div class="stat-lbl">GDP</div></div>
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(20px,2.5vw,32px)">171元→<br>5.2万元</div><div class="stat-lbl">城镇人均收入</div></div>
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(20px,2.5vw,32px)">134元→<br>2.1万元</div><div class="stat-lbl">农村人均收入</div></div>
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(20px,2.5vw,32px)">68岁→<br>78.2岁</div><div class="stat-lbl">人均预期寿命</div></div>
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(20px,2.5vw,32px)">1.55%→<br>60.2%</div><div class="stat-lbl">高等教育毛入学率</div></div>
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(20px,2.5vw,32px)">17.9%→<br>66.2%</div><div class="stat-lbl">城镇化率</div></div>
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(20px,2.5vw,32px)">0→<br>4.6万km</div><div class="stat-lbl">高铁里程</div></div>
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(20px,2.5vw,32px)">第11位→<br>第2位</div><div class="stat-lbl">全球经济排名</div></div>
+		</div>
+		<p class="tm a-up a-d5" style="position:relative;z-index:2;text-align:center;margin-top:20px;font-size:12px">以上数据来源：国家统计局、世界银行等公开资料</p>
+	</div>
+
+	<!-- ====== 22 理论创新 ====== -->
+	<div class="slide" data-i="21">
+		<div class="glow glow-g" style="top:-100px;left:30%"></div>
+		<div style="text-align:center;max-width:800px">
+			<div class="sec-label a-up a-d1">20 / 理论创新</div>
+			<h2 class="s-title serif a-up a-d2">改革开放的理论成果</h2>
+			<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		</div>
+		<div class="card-grid c4 a-up a-d4">
+			<div class="cg-item" style="border:1px solid rgba(200,164,92,.12);background:rgba(200,164,92,.02)">
+				<div style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(200,164,92,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:14px;font-weight:700;color:#c8a45c">1</div>
+				<div class="cg-title" style="color:#c8a45c">邓小平理论</div>
+				<div class="cg-desc">回答了"什么是社会主义、怎样建设社会主义"的根本问题</div>
+			</div>
+			<div class="cg-item" style="border:1px solid rgba(200,164,92,.12);background:rgba(200,164,92,.02)">
+				<div style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(200,164,92,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:14px;font-weight:700;color:#c8a45c">2</div>
+				<div class="cg-title" style="color:#c8a45c">"三个代表"重要思想</div>
+				<div class="cg-desc">回答了"建设什么样的党、怎样建设党"的问题</div>
+			</div>
+			<div class="cg-item" style="border:1px solid rgba(200,164,92,.12);background:rgba(200,164,92,.02)">
+				<div style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(200,164,92,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:14px;font-weight:700;color:#c8a45c">3</div>
+				<div class="cg-title" style="color:#c8a45c">科学发展观</div>
+				<div class="cg-desc">回答了"实现什么样的发展、怎样发展"的问题</div>
+			</div>
+			<div class="cg-item" style="border:1px solid rgba(200,164,92,.2);background:rgba(200,164,92,.04)">
+				<div style="width:36px;height:36px;border-radius:50%;border:1px solid rgba(200,164,92,.5);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:14px;font-weight:700;color:#c8a45c">4</div>
+				<div class="cg-title" style="color:#e8d5a3">习近平新时代中国特色社会主义思想</div>
+				<div class="cg-desc">回答了"新时代坚持和发展什么样的中国特色社会主义、怎样坚持和发展"的时代课题</div>
+			</div>
+		</div>
+		<p class="tm a-up a-d5" style="text-align:center;margin-top:20px;font-size:13px">四大理论成果一脉相承、与时俱进，构成了中国特色社会主义理论体系的完整框架</p>
+	</div>
+
+	<!-- ====== 23 全面深化改革 ====== -->
+	<div class="slide" data-i="22">
+		<div class="marquee-wrap a-fi" style="position:absolute;top:12%;left:0;z-index:0">
+			<div class="marquee-track">
+				<span>全面深化改革</span><span>·</span><span>全面深化改革</span><span>·</span><span>全面深化改革</span><span>·</span><span>全面深化改革</span><span>·</span><span>全面深化改革</span><span>·</span>
+			</div>
+		</div>
+		<div style="position:relative;z-index:2;text-align:center;max-width:800px">
+			<div class="sec-label a-up a-d1">21 / 新时代</div>
+			<h2 class="s-title serif a-up a-d2">全面深化改革</h2>
+			<div class="divider a-up a-d3" style="margin:20px auto"></div>
+			<p class="s-sub a-up a-d4" style="text-align:center;margin:0 auto 28px">党的十八大以来，以习近平同志为核心的党中央，以巨大的政治勇气和智慧推动全面深化改革，中国特色社会主义进入新时代。</p>
+		</div>
+		<div class="quote-block a-up a-d5" style="position:relative;z-index:2">
+			<div class="quote-mark">"</div>
+			<div class="quote-text serif">改革开放是决定当代中国命运的关键一招，也是决定实现"两个一百年"奋斗目标、实现中华民族伟大复兴的关键一招。</div>
+			<div class="quote-author">—— 习近平</div>
+		</div>
+		<div class="stat-row a-up a-d6" style="margin-top:28px;position:relative;z-index:2;grid-template-columns:repeat(4,1fr)">
+			<div class="stat-item"><div class="stat-num">2000+</div><div class="stat-lbl">十八届三中全会以来<br>改革方案数量</div></div>
+			<div class="stat-item"><div class="stat-num">7大领域</div><div class="stat-lbl">经济、政治、文化<br>社会、生态、党建、国防</div></div>
+			<div class="stat-item"><div class="stat-num">336项</div><div class="stat-lbl">重大改革举措<br>逐一落地见效</div></div>
+			<div class="stat-item"><div class="stat-num">多点突破</div><div class="stat-lbl">系统性、整体性<br>协同性推进</div></div>
+		</div>
+	</div>
+
+	<!-- ====== 24 脱贫攻坚 ====== -->
+	<div class="slide" data-i="23">
+		<div class="glow glow-w" style="bottom:-100px;right:-80px"></div>
+		<div class="two-col two-col--r">
+			<div>
+				<div class="sec-label a-l a-d1">22 / 新时代</div>
+				<h2 class="s-title serif a-l a-d2">脱贫攻坚</h2>
+				<div class="divider a-l a-d3"></div>
+				<p class="s-sub a-l a-d4">2021年2月25日，习近平在全国脱贫攻坚总结表彰大会上庄严宣告，中国脱贫攻坚战取得了全面胜利。</p>
+				<ul class="pt-list a-l a-d5" style="margin-top:20px">
+					<li><iconify-icon icon="lucide:heart-handshake"></iconify-icon><span><strong style="color:#fff">9899万</strong>农村贫困人口全部脱贫</span></li>
+					<li><iconify-icon icon="lucide:heart-handshake"></iconify-icon><span><strong style="color:#fff">832个</strong>贫困县全部摘帽</span></li>
+					<li><iconify-icon icon="lucide:heart-handshake"></iconify-icon><span><strong style="color:#fff">12.8万</strong>个贫困村全部出列</span></li>
+					<li><iconify-icon icon="lucide:heart-handshake"></iconify-icon><span>提前10年实现联合国<strong style="color:#fff">2030年可持续发展议程</strong>减贫目标</span></li>
+					<li><iconify-icon icon="lucide:heart-handshake"></iconify-icon><span>创造了人类减贫史上的<strong style="color:#fff">伟大奇迹</strong></span></li>
+				</ul>
+			</div>
+			<div class="a-r a-d3">
+				<div class="img-p" style="aspect-ratio:4/5"><img src="https://picsum.photos/seed/povertyalleviation/600/750.jpg" alt=""><div class="img-cap">脱贫攻坚 · 历史性成就</div></div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ====== 25 一带一路 ====== -->
+	<div class="slide" data-i="24">
+		<div class="sec-label a-up a-d1" style="text-align:center">23 / 新时代</div>
+		<h2 class="s-title serif a-up a-d2" style="text-align:center">"一带一路"倡议</h2>
+		<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		<p class="s-sub a-up a-d4" style="text-align:center;margin:0 auto 28px">2013年，习近平先后提出建设"丝绸之路经济带"和"21世纪海上丝绸之路"的合作倡议，开辟了中国对外开放的新天地。</p>
+		<div class="stat-row a-up a-d5" style="grid-template-columns:repeat(5,1fr)">
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(18px,2.2vw,28px)">150+</div><div class="stat-lbl">国家和国际组织<br>签署合作文件</div></div>
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(18px,2.2vw,28px)">3000+</div><div class="stat-lbl">合作项目<br>落地实施</div></div>
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(18px,2.2vw,28px)">42万亿</div><div class="stat-lbl">累计贸易额<br>（人民币）</div></div>
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(18px,2.2vw,28px)">1万亿美元+</div><div class="stat-lbl">对沿线国家<br>直接投资</div></div>
+			<div class="stat-item"><div class="stat-num" style="font-size:clamp(18px,2.2vw,28px)">42万</div><div class="stat-lbl">创造就业岗位<br>（沿线国家）</div></div>
+		</div>
+		<div class="card-grid c3 a-up a-d6" style="margin-top:2px">
+			<div class="cg-item" style="text-align:left;padding:24px 28px">
+				<div style="font-size:12px;color:#c8a45c;font-weight:600;margin-bottom:8px">icon 政策沟通</div>
+				<div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.7">与多国发展战略对接，建立多层次政策沟通机制</div>
+			</div>
+			<div class="cg-item" style="text-align:left;padding:24px 28px">
+				<div style="font-size:12px;color:#c8a45c;font-weight:600;margin-bottom:8px">icon 设施联通</div>
+				<div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.7">中欧班列、雅万高铁、比雷埃夫斯港等标志性工程</div>
+			</div>
+			<div class="cg-item" style="text-align:left;padding:24px 28px">
+				<div style="font-size:12px;color:#c8a45c;font-weight:600;margin-bottom:8px">icon 民心相通</div>
+				<div style="font-size:13px;color:rgba(255,255,255,.45);line-height:1.7">鲁班工坊、文化年、留学生交流等人文合作深化</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ====== 26 高质量发展 ====== -->
+	<div class="slide" data-i="25">
+		<div class="glow glow-g" style="top:-80px;left:-80px"></div>
+		<div style="text-align:center;max-width:780px">
+			<div class="sec-label a-up a-d1">24 / 新时代</div>
+			<h2 class="s-title serif a-up a-d2">高质量发展</h2>
+			<div class="divider a-up a-d3" style="margin:20px auto"></div>
+			<p class="s-sub a-up a-d4" style="text-align:center;margin:0 auto 28px">党的十九大明确提出，我国经济已由高速增长阶段转向高质量发展阶段。这是新时代中国经济发展的鲜明特征。</p>
+		</div>
+		<div class="card-grid c4 a-up a-d5">
+			<div class="cg-item">
+				<iconify-icon icon="lucide:lightbulb" class="cg-icon"></iconify-icon>
+				<div class="cg-title">创新驱动</div>
+				<div class="cg-desc">全社会研发投入超<strong>3.3万亿元</strong><br>发明专利有效量<strong>486万件</strong><br>全球创新指数第<strong>12位</strong></div>
+			</div>
+			<div class="cg-item">
+				<iconify-icon icon="lucide:leaf" class="cg-icon"></iconify-icon>
+				<div class="cg-title">绿色发展</div>
+				<div class="cg-desc">单位GDP能耗累计下降<strong>26%+</strong><br>可再生能源装机超<strong>15亿千瓦</strong><br>新能源汽车产销<strong>全球第一</strong></div>
+			</div>
+			<div class="cg-item">
+				<iconify-icon icon="lucide:scale" class="cg-icon"></iconify-icon>
+				<div class="cg-title">协调发展</div>
+				<div class="cg-desc">京津冀协同发展<br>长三角一体化<br>粤港澳大湾区建设<br>区域发展格局优化</div>
+			</div>
+			<div class="cg-item">
+				<iconify-icon icon="lucide:door-open" class="cg-icon"></iconify-icon>
+				<div class="cg-title">开放发展</div>
+				<div class="cg-desc">自贸试验区<strong>22个</strong><br>海南自贸港建设<br>外商投资准入<br>负面清单持续缩减</div>
+			</div>
+		</div>
+		<p class="tm a-up a-d6" style="text-align:center;margin-top:20px;font-size:13px">贯彻新发展理念、构建新发展格局、推动高质量发展，是当前和今后一个时期的主旋律。</p>
+	</div>
+
+	<!-- ====== 27 改革经验 ====== -->
+	<div class="slide" data-i="26">
+		<div class="glow glow-w" style="bottom:-100px;left:30%"></div>
+		<div style="text-align:center;max-width:800px">
+			<div class="sec-label a-up a-d1">25 / 经验与启示</div>
+			<h2 class="s-title serif a-up a-d2">改革开放的宝贵经验</h2>
+			<div class="divider a-up a-d3" style="margin:20px auto"></div>
+		</div>
+		<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2px;max-width:960px;width:100%;background:rgba(255,255,255,.03)" class="a-up a-d4">
+			<div class="cg-item" style="text-align:left;padding:28px;border:1px solid rgba(200,164,92,.1)">
+				<div style="font-size:28px;margin-bottom:10px">🇨🇳</div>
+				<div style="font-size:13px;font-weight:500;color:rgba(255,255,255,.75);margin-bottom:8px">坚持党的领导</div>
+				<div style="font-size:11px;color:rgba(255,255,255,.3);line-height:1.7">改革开放成功的根本保证。党总揽全局、协调各方，确保改革沿着正确方向前进。</div>
+			</div>
+			<div class="cg-item" style="text-align:left;padding:28px;border:1px solid rgba(200,164,92,.1)">
+				<div style="font-size:28px;margin-bottom:10px">🧭</div>
+				<div style="font-size:13px;font-weight:500;color:rgba(255,255,255,.75);margin-bottom:8px">坚持正确方向</div>
+				<div style="font-size:11px;color:rgba(255,255,255,.3);line-height:1.7">既不走封闭僵化的老路，也不走改旗易帜的邪路，坚定不移走中国特色社会主义道路。</div>
+			</div>
+			<div class="cg-item" style="text-align:left;padding:28px;border:1px solid rgba(200,164,92,.1)">
+				<div style="font-size:28px;margin-bottom:10px">🤝</div>
+				<div style="font-size:13px;font-weight:500;color:rgba(255,255,255,.75);margin-bottom:8px">坚持以人民为中心</div>
+				<div style="font-size:11px;color:rgba(255,255,255,.3);line-height:1.7">把人民对美好生活的向往作为奋斗目标，让改革发展成果更多更公平惠及全体人民。</div>
+			</div>
+			<div class="cg-item" style="text-align:left;padding:28px;border:1px solid rgba(200,164,92,.1)">
+				<div style="font-size:28px;margin-bottom:10px">🚀</div>
+				<div style="font-size:13px;font-weight:500;color:rgba(255,255,255,.75);margin-bottom:8px">坚持开拓创新</div>
+				<div style="font-size:11px;color:rgba(255,255,255,.3);line-height:1.7">敢闯敢试、敢为人先，在实践中不断探索前无古人的新路。</div>
+			</div>
+			<div class="cg-item" style="text-align:left;padding:28px;border:1px solid rgba(200,164,92,.1)">
+				<div style="font-size:28px;margin-bottom:10px">📐</div>
+				<div style="font-size:13px;font-weight:500;color:rgba(255,255,255,.75);margin-bottom:8px">坚持科学方法论</div>
+				<div style="font-size:11px;color:rgba(255,255,255,.3);line-height:1.7">摸着石头过河与顶层设计相结合，试点先行与全面推进相促进。</div>
+			</div>
+			<div class="cg-item" style="text-align:left;padding:28px;border:1px solid rgba(200,164,92,.1)">
+				<div style="font-size:28px;margin-bottom:10px">🌍</div>
+				<div style="font-size:13px;font-weight:500;color:rgba(255,255,255,.75);margin-bottom:8px">坚持对外开放</div>
+				<div style="font-size:11px;color:rgba(255,255,255,.3);line-height:1.7">开放带来进步，封闭必然落后。中国的发展离不开世界，世界的繁荣也需要中国。</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- ====== 28 结语 ====== -->
+	<div class="slide" data-i="27">
+		<div class="glow glow-g" style="top:50%;left:50%;transform:translate(-50%,-50%);width:550px;height:550px;opacity:.4"></div>
+		<div style="position:relative;z-index:2;text-align:center;max-width:780px">
+			<div class="sec-label a-up a-d1">26 / 结语</div>
+			<h2 class="s-title serif a-up a-d2" style="font-size:clamp(28px,5vw,58px)">改革永远在路上</h2>
+			<div class="divider a-up a-d3" style="margin:20px auto"></div>
+			<p class="s-sub a-up a-d4" style="text-align:center;margin:0 auto 28px">
+				四十余年改革开放，中国实现了从站起来、富起来到强起来的伟大飞跃。历史雄辩地证明：改革开放是坚持和发展中国特色社会主义的必由之路。
+			</p>
+			<div class="quote-block a-up a-d5">
+				<div class="quote-mark">"</div>
+				<div class="quote-text serif" style="font-size:clamp(15px,2vw,22px)">中国的改革开放，既是我们党领导的一场新的伟大革命，又是社会主义制度的自我完善和发展。</div>
+			</div>
+			<div class="deco-line a-up a-d6"></div>
+			<div class="f-logo a-up a-d7">MAOGAI PRESENTATION</div>
+			<p class="td a-up a-d7" style="font-size:14px;letter-spacing:.12em;margin-bottom:8px">谢谢聆听</p>
+			<p class="td a-up a-d7" style="font-size:11px;letter-spacing:.2em">THANK YOU</p>
+		</div>
+	</div>
+
+</div>
+
+<script>
+    const slides=document.querySelectorAll('.slide'),N=slides.length;let cur=0,busy=false;
+    const pb=document.getElementById('progressBar'),cn=document.getElementById('currentNum'),tn=document.getElementById('totalNum'),
+        pv=document.getElementById('prevBtn'),nx=document.getElementById('nextBtn');
+    tn.textContent=String(N).padStart(2,'0');
+
+    function upd(){
+        slides.forEach((s,i)=>{
+            s.classList.remove('active');
+            s.querySelectorAll('.a-up,.a-sc,.a-l,.a-r,.a-fi').forEach(e=>{e.style.opacity='';e.style.transform=''});
+        });
+        slides[cur].classList.add('active');
+        pb.style.width=((cur+1)/N*100)+'%';
+        cn.textContent=String(cur+1).padStart(2,'0');
+        pv.disabled=cur===0;nx.disabled=cur===N-1;
+    }
+    function go(i){if(busy||i===cur||i<0||i>=N)return;busy=true;cur=i;upd();setTimeout(()=>busy=false,900)}
+
+    nx.addEventListener('click',()=>go(cur+1));
+    pv.addEventListener('click',()=>go(cur-1));
+    document.addEventListener('keydown',e=>{
+        if(e.key==='ArrowRight'||e.key==='ArrowDown'||e.key===' '){e.preventDefault();go(cur+1)}
+        else if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();go(cur-1)}
+    });
+
+    let tx=0,ty=0;
+    document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX;ty=e.changedTouches[0].screenY},{passive:true});
+    document.addEventListener('touchend',e=>{
+        const dx=e.changedTouches[0].screenX-tx,dy=e.changedTouches[0].screenY-ty;
+        if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>50){dx<0?go(cur+1):go(cur-1)}
+        else if(Math.abs(dy)>50){dy<0?go(cur+1):go(cur-1)}
+    },{passive:true});
+
+    let wt;
+    document.addEventListener('wheel',e=>{e.preventDefault();clearTimeout(wt);wt=setTimeout(()=>{e.deltaY>0?go(cur+1):go(cur-1)},80)},{passive:false});
+
+    upd();
+</script>
+</body>
+</html>
